@@ -30,7 +30,9 @@ Puis créez la base de données
 symfony console d:d:c
 ```
 
-Installez le MakerBundle et ORM pour créer des entités
+Aïe ! Petit problème, la commande n'est pas reconnu. C'est normal il nous manque l'ensemble des commandes du MakerBundle.
+
+Installez le MakerBundle et ORM pour créer la base de données et les entités
 
 ```bash
 composer require symfony/maker-bundle --dev
@@ -41,7 +43,7 @@ Puis on installe le package ORM
 composer require symfony/orm-pack
 ```
 
-Maintenant, on peut créer notre première entité
+Maintenant, on peut créer notre base de donnée `symfony console d:d:c` puis une première entité
 
 ```bash
 symfony console make:entity Doctor
@@ -65,7 +67,7 @@ Voilà maintenant que notre entité est créée, on peut faire la migration
 symfony console make:migration
 ```
 
-Et on peut lancer la migration
+Et on peut exécuter la migration
 
 ```bash
 symfony console d:m:m
@@ -86,10 +88,10 @@ On termine la configuration en ajoutant une annotation à notre entité
 
 // ...
 
-use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiResource; // Cette classe
 
 #[ORM\Entity(repositoryClass: DoctorRepository::class)]
-#[ApiResource]
+#[ApiResource] // Cette annotation
 class Doctor
 {
     // ...
@@ -115,8 +117,10 @@ Dans le dossier `src/DataFixtures`, insérez le code suivant dans le fichier `Ap
 ```php
 <?php
 
-// ...
+namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\DoctorRepository;
 use App\Entity\Doctor;
 use Faker\Factory;
 
